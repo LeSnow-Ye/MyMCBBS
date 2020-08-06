@@ -1,0 +1,150 @@
+﻿<UserControl
+    x:Class="MyMCBBS.View.UserView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:gif="http://wpfanimatedgif.codeplex.com"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:iconPacks="http://metro.mahapps.com/winfx/xaml/iconpacks"
+    xmlns:local="clr-namespace:MyMCBBS.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="680"
+    d:DesignWidth="280"
+    DataContext="{Binding Source={StaticResource Locator}, Path=User}"
+    mc:Ignorable="d">
+    <hc:Card Margin="20" Effect="{StaticResource EffectShadow3}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="180" />
+                <RowDefinition />
+            </Grid.RowDefinitions>
+            <Image
+                Width="128"
+                Height="128"
+                Margin="4"
+                Source="/MyMCBBS;component/Resources/AvatarBackground.png" />
+            <Image
+                Width="115"
+                Height="115"
+                gif:ImageBehavior.AnimatedSource="{Binding UserModel.Avatar}" />
+            <StackPanel Grid.Row="1" Margin="0,-17,0,0">
+                <TextBlock
+                    HorizontalAlignment="Center"
+                    FontWeight="Bold"
+                    Style="{StaticResource TextBlockLargeBold}"
+                    Text="{Binding UserModel.Name}" />
+                <Border
+                    Width="200"
+                    Margin="8"
+                    BorderBrush="{DynamicResource SecondaryAccentBrush}"
+                    BorderThickness="2"
+                    CornerRadius="1" />
+                <Grid Width="200">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition />
+                        <ColumnDefinition Width="5" />
+                        <ColumnDefinition />
+                    </Grid.ColumnDefinitions>
+                    <Border
+                        Grid.Column="1"
+                        Width="2"
+                        BorderBrush="LightGray"
+                        BorderThickness="3"
+                        CornerRadius="1" />
+                    <StackPanel HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" ToolTip="积分">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/Credit.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.Credit}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" ToolTip="金粒">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/gold_nugget.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.GoldNugget}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" ToolTip="钻石">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/diamond.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.Diamond}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" ToolTip="绿宝石">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/emerald.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.Emerald}" />
+                        </StackPanel>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" HorizontalAlignment="Center">
+                        <StackPanel Orientation="Horizontal" ToolTip="人气">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/wheat_seeds.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.Popularity}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" ToolTip="爱心">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/apple.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.Heart}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" ToolTip="贡献">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/bread.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.Contribution}" />
+                        </StackPanel>
+                        <StackPanel Orientation="Horizontal" ToolTip="下界之星">
+                            <Image
+                                Margin="4"
+                                HorizontalAlignment="Left"
+                                Source="/MyMCBBS;component/Resources/Credit/nether_star.png"
+                                Stretch="None" />
+                            <TextBlock
+                                HorizontalAlignment="Left"
+                                Style="{StaticResource TextBlockSubTitle}"
+                                Text="{Binding UserModel.NetherStar}" />
+                        </StackPanel>
+                    </StackPanel>
+                </Grid>
+            </StackPanel>
+        </Grid>
+    </hc:Card>
+</UserControl>
