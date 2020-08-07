@@ -27,8 +27,20 @@ namespace MyMCBBS.Model
         /// </summary>
         public bool Loaded = false;
 
+        /// <summary>
+        /// 问答版
+        /// </summary>
         public bool SuperMode = false;
+        public bool NotifyQA = false;
+        public bool PlaySoundQA = false;
 
-        public bool PlaySound = false;
+
+        /// <summary>
+        /// 自定义
+        /// </summary>
+        public bool AutoOpen = false;
+        public bool NotifyCuston = false;
+        public bool PlaySoundCustom = false;
+        public List<string> CustonPartList = new List<string>();
     }
 }

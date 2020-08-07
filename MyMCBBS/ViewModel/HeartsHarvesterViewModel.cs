@@ -21,12 +21,6 @@ namespace MyMCBBS.ViewModel
             App.PostsSpider.Start();
         }
 
-        public RelayCommand<Post> OpenWithBrowserCommand { get; set; } = new RelayCommand<Post>((post) =>
-        {
-            Web.OpenWithBrowser(post.Url);
-            post.IsNewPost = false;
-        });
-
         public HeartsHarvesterModel HeartsHarvesterModel
         {
             get => this.heartsHarvesterModel;
@@ -36,5 +30,11 @@ namespace MyMCBBS.ViewModel
                 this.RaisePropertyChanged("heartsHarvesterModel");
             }
         }
+
+        public RelayCommand<Post> OpenWithBrowserCommand { get; set; } = new RelayCommand<Post>((post) =>
+        {
+            Web.OpenWithBrowser(post.Url);
+            post.IsNewPost = false;
+        });
     }
 }

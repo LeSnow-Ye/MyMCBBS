@@ -24,7 +24,7 @@ namespace MyMCBBS.ViewModel
             set
             {
                 this.launchModel = value;
-                this.RaisePropertyChanged("launchModel");
+                this.RaisePropertyChanged("LaunchModel");
             }
         }
     }

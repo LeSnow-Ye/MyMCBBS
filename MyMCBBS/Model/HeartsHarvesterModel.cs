@@ -6,18 +6,26 @@ using System.Threading.Tasks;
 using MyMCBBS.Utils;
 using GalaSoft.MvvmLight;
 using System.Collections.ObjectModel;
+using MyMCBBS.ViewModel;
 
 namespace MyMCBBS.Model
 {
     public class HeartsHarvesterModel : ObservableObject
     {
         private ObservableCollection<Post> qaPosts = new ObservableCollection<Post>();
-
-
         private bool superMode = App.Config.Config.SuperMode;
+        private bool playSound = App.Config.Config.PlaySoundQA;
+        private bool notify = App.Config.Config.NotifyQA;
 
-
-        private bool playSound = App.Config.Config.PlaySound;
+        public HeartsHarvesterModel()
+        {
+            this.QAPosts.CollectionChanged += (s, e) =>
+            {
+                (App.Current.FindResource("Locator") as ViewModelLocator).NewPostNotification.Part = QAPosts[0].PostPart;
+                (App.Current.FindResource("Locator") as ViewModelLocator).NewPostNotification.URL = QAPosts[0].Url;
+                (App.Current.FindResource("Locator") as ViewModelLocator).NewPostNotification.Title = QAPosts[0].Title;
+            };
+        }
 
         /// <summary>
         /// Gets or sets 播放声音.
@@ -28,7 +36,7 @@ namespace MyMCBBS.Model
             set
             {
                 this.playSound = value;
-                App.Config.Config.PlaySound = value;
+                App.Config.Config.PlaySoundQA = value;
                 App.Config.Save();
                 this.RaisePropertyChanged("playSound");
             }
@@ -49,6 +57,21 @@ namespace MyMCBBS.Model
             }
         }
 
+        /// <summary>
+        /// Gets or sets 消息通知.
+        /// </summary>
+        public bool Notify
+        {
+            get => this.notify;
+            set
+            {
+                this.notify = value;
+                App.Config.Config.NotifyQA = value;
+                App.Config.Save();
+                this.RaisePropertyChanged("Notify");
+            }
+        }
+
         public ObservableCollection<Post> QAPosts
         {
             get => this.qaPosts;
@@ -58,6 +81,5 @@ namespace MyMCBBS.Model
                 this.RaisePropertyChanged("QAPosts");
             }
         }
-
     }
 }

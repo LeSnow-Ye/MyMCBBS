@@ -17,6 +17,8 @@ using GalaSoft.MvvmLight;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using HandyControl.Tools.Extension;
+using MyMCBBS.View;
+using HandyControl.Data;
 
 namespace MyMCBBS
 {
@@ -55,5 +57,10 @@ namespace MyMCBBS
 
         private void NotifyIcon_Click(object sender, RoutedEventArgs e) => this.Show();
         private void HideWindow_Click(object sender, RoutedEventArgs e) => this.Hide();
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            Notification.Show(new NewPostNotificationView(), ShowAnimation.HorizontalMove, false);
+        }
     }
 }

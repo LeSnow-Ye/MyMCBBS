@@ -21,7 +21,6 @@ namespace MyMCBBS.ViewModel
                 App.Config.Config.UID = (int)input;
                 App.Config.Save();
 
-                // 我被我写下的代码感动到哭了，这段代码真的不容易啊，大概也就写了一两天吧
                 Task.Run(async () =>
                 {
                     await App.Current.Dispatcher.BeginInvoke((Action)(async () => await App.UserModel.RefreshAsync()));

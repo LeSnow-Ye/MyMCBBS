@@ -61,11 +61,17 @@
                 <RowDefinition />
             </Grid.RowDefinitions>
             <!--  托盘菜单  -->
-            <hc:NotifyIcon x:Name="NotifyIcon" Click="NotifyIcon_Click" Text="MyMCBBS">
+            <hc:NotifyIcon
+                x:Name="NotifyIcon"
+                Click="NotifyIcon_Click"
+                Text="MyMCBBS">
                 <hc:NotifyIcon.ContextMenu>
                     <ContextMenu>
-                        <MenuItem Header="显示主窗口" Click="NotifyIcon_Click" ToolTip="单击托盘图标也可以显示主窗口哦~" />
-                        <MenuItem Header="隐藏主窗口" Click="HideWindow_Click"/>
+                        <MenuItem
+                            Click="NotifyIcon_Click"
+                            Header="显示主窗口"
+                            ToolTip="单击托盘图标也可以显示主窗口哦~" />
+                        <MenuItem Click="HideWindow_Click" Header="隐藏主窗口" />
                         <Separator />
                         <MenuItem Click="Exit_Click" Header="退出" />
                     </ContextMenu>
@@ -88,77 +94,124 @@
                     <ColumnDefinition />
                 </Grid.ColumnDefinitions>
                 <!--  SideMenu  -->
-                <hc:SideMenu Width="250">
-                    <hc:Interaction.Triggers>
-                        <hc:EventTrigger EventName="SelectionChanged">
-                            <hc:EventToCommand Command="{Binding IndexSelectionChangedCommand}" PassEventArgsToCommand="True" />
-                        </hc:EventTrigger>
-                    </hc:Interaction.Triggers>
-                    <hc:SideMenuItem IsSelected="True">
-                        <hc:SideMenuItem
-                            Margin="0,-48,0,0"
-                            FontSize="18"
-                            Header="主页"
-                            IsSelected="True">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Home" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
+                <DockPanel Background="{DynamicResource RegionBrush}" LastChildFill="False">
+                    <hc:SideMenu Width="250" DockPanel.Dock="Top">
+                        <hc:Interaction.Triggers>
+                            <hc:EventTrigger EventName="SelectionChanged">
+                                <hc:EventToCommand Command="{Binding IndexSelectionChangedCommand}" PassEventArgsToCommand="True" />
+                            </hc:EventTrigger>
+                        </hc:Interaction.Triggers>
+                        <hc:SideMenuItem IsSelected="True">
+                            <hc:SideMenuItem
+                                Margin="0,-48,0,0"
+                                FontSize="18"
+                                Header="主页"
+                                IsSelected="True">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Home" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="爱心收割机">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Heart" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="主题抓取器">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="CardBulleted" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="收藏">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Package" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="积分分析">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="ChartPie" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="统计信息">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="CardText" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="快捷导航">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Map" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
+                            <hc:SideMenuItem FontSize="18" Header="小工具">
+                                <hc:SideMenuItem.Icon>
+                                    <materialDesign:PackIcon Kind="Toolbox" Style="{StaticResource IconStyle}" />
+                                </hc:SideMenuItem.Icon>
+                            </hc:SideMenuItem>
                         </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="爱心收割机">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Heart" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="主题抓取器">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="CardBulleted" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="收藏">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Package" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="积分分析">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="ChartPie" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="统计信息">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="CardText" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="快捷导航">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Map" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                        <hc:SideMenuItem FontSize="18" Header="小工具">
-                            <hc:SideMenuItem.Icon>
-                                <materialDesign:PackIcon Kind="Toolbox" Style="{StaticResource IconStyle}" />
-                            </hc:SideMenuItem.Icon>
-                        </hc:SideMenuItem>
-                    </hc:SideMenuItem>
-                </hc:SideMenu>
+                    </hc:SideMenu>
+                    <StackPanel
+                        Margin="10,0"
+                        DockPanel.Dock="Bottom"
+                        Orientation="Horizontal">
+                        <Button
+                            Height="36"
+                            Margin="8"
+                            Padding="8,4,16,4"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Margin="4,4,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    Kind="Settings"
+                                    Opacity="0.7" />
+                                <Label Content="设置" FontSize="16" />
+                            </StackPanel>
+                        </Button>
+                        <Button
+                            Height="36"
+                            Margin="8"
+                            Padding="8,4,16,4"
+                            HorizontalAlignment="Left"
+                            HorizontalContentAlignment="Left"
+                            Click="Button_Click"
+                            Style="{StaticResource MaterialDesignFlatButton}">
+                            <StackPanel Orientation="Horizontal">
+                                <materialDesign:PackIcon
+                                    Width="20"
+                                    Height="20"
+                                    Margin="4,4,0,0"
+                                    VerticalAlignment="Center"
+                                    Foreground="{DynamicResource PrimaryTextBrush}"
+                                    Kind="AboutVariant"
+                                    Opacity="0.7" />
+                                <Label Content="关于" FontSize="16" />
+                            </StackPanel>
+                        </Button>
+                    </StackPanel>
+                </DockPanel>
                 <!--  Main  -->
                 <materialDesign:Transitioner Grid.Column="1" SelectedIndex="{Binding MainWindowModel.PresentIndex, Converter={StaticResource EnumToValueConverter}}">
                     <!--  主页  -->
                     <materialDesign:TransitionerSlide>
                         <Grid>
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition/>
-                                <ColumnDefinition Width="280"/>
+                                <ColumnDefinition />
+                                <ColumnDefinition Width="280" />
                             </Grid.ColumnDefinitions>
-                            <view:UserView Grid.Column="1"/>
+                            <view:UserView Grid.Column="1" />
                         </Grid>
                     </materialDesign:TransitionerSlide>
-                    <!--爱心收割机-->
+                    <!--  爱心收割机  -->
                     <materialDesign:TransitionerSlide>
-                        <view:HeartsHarvesterView/>
+                        <view:HeartsHarvesterView />
                     </materialDesign:TransitionerSlide>
+                    <!--  自定义版块  -->
                     <materialDesign:TransitionerSlide>
-                        <Label Content="2" />
+                        <view:CustomSpiderView />
                     </materialDesign:TransitionerSlide>
                     <materialDesign:TransitionerSlide>
                         <Label Content="3" />
@@ -250,7 +303,7 @@
                 </Button>
             </DockPanel>
             <!--  Dialog  -->
-            <!--  view:DialogView Grid.RowSpan="2" /  -->
+            <view:DialogView Grid.RowSpan="2" />
         </Grid>
     </Border>
 </Window>

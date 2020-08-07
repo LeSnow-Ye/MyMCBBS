@@ -102,6 +102,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Model\Config.cs" />
+    <Compile Include="Model\CustomSpiderModel.cs" />
     <Compile Include="Model\DialogHostModel.cs" />
     <Compile Include="Model\HeartsHarvesterModel.cs" />
     <Compile Include="Model\LaunchModel.cs" />
@@ -113,13 +114,18 @@
     <Compile Include="Utils\HtmlAnalist.cs" />
     <Compile Include="Utils\PostsSpider.cs" />
     <Compile Include="Utils\Web.cs" />
+    <Compile Include="ViewModel\CustomSpiderViewModel.cs" />
     <Compile Include="ViewModel\DialogHostViewModel.cs" />
     <Compile Include="ViewModel\HeartsHarvesterViewModel.cs" />
     <Compile Include="ViewModel\LaunchViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\NewPostNotificationViewModel.cs" />
     <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\UserViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Compile Include="View\CustomSpiderView.xaml.cs">
+      <DependentUpon>CustomSpiderView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\DialogView.xaml.cs">
       <DependentUpon>DialogView.xaml</DependentUpon>
     </Compile>
@@ -128,6 +134,9 @@
     </Compile>
     <Compile Include="View\LaunchingWindow.xaml.cs">
       <DependentUpon>LaunchingWindow.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\NewPostNotificationView.xaml.cs">
+      <DependentUpon>NewPostNotificationView.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\UserView.xaml.cs">
       <DependentUpon>UserView.xaml</DependentUpon>
@@ -144,6 +153,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="View\CustomSpiderView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\DialogView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -153,6 +166,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\LaunchingWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\NewPostNotificationView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

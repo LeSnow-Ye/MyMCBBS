@@ -9,6 +9,9 @@ using System.Media;
 using AngleSharp.Dom;
 using System.Timers;
 using MyMCBBS.ViewModel;
+using HandyControl.Controls;
+using HandyControl.Data;
+using MyMCBBS.View;
 using System.Data;
 using System.Windows.Markup;
 using System.Diagnostics;
@@ -35,7 +38,8 @@ namespace MyMCBBS.Utils
             Debug.WriteLine("Refresh");
             Task.Run(async () =>
             {
-                string html = Web.DownloadWebsite($"https://www.mcbbs.net/forum.php?mod=guide&view=newthread");
+                // 最新主题失效因此抓取 抢沙发
+                string html = Web.DownloadWebsite($"https://www.mcbbs.net/forum.php?mod=guide&view=sofa");
                 var pageDocument = await BrowsingContext.New(Configuration.Default).OpenAsync(req => req.Content(html));
 
                 var postsPart = pageDocument.QuerySelectorAll("#threadlist > div.bm_c > table > tbody").ToList(); // 所有帖子的集合
@@ -54,11 +58,17 @@ namespace MyMCBBS.Utils
                         PostPart = item.QuerySelector("tbody > tr > td.by > a").Text(),
                     };
 
+                    #region 爱心收割机
                     // 是否已经抓取过
-                    bool exist = false;
+                    bool? qaExist = false;
+
                     switch (post.PostPart)
                     {
-                        case "矿工茶馆":
+                        case "原版问答":
+                        case "Mod问答":
+                        case "周边问答":
+                        case "联机问答":
+                        case "基岩版问答":
                             App.Current.Dispatcher.Invoke(() =>
                             {
                                 if ((App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.All(p => p.Url != post.Url))
@@ -77,27 +87,97 @@ namespace MyMCBBS.Utils
                                     {
                                         (App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.RemoveAt(29);
                                     }
+
+                                    qaExist = null;
                                 }
                                 else
                                 {
-                                    exist = true;
+                                    qaExist = true;
                                 }
                             });
                             break;
                     }
 
-                    if (exist)
+                    if (!initialization && qaExist == null)
+                    {
+                        if (App.Config.Config.PlaySoundQA)
+                        {
+                            canPlaySound = true;
+                        }
+
+                        if (App.Config.Config.SuperMode)
+                        {
+                            Web.OpenWithBrowser(post.Url);
+                        }
+
+                        if (App.Config.Config.NotifyQA)
+                        {
+                            App.Current.Dispatcher.Invoke(() => Notification.Show(new NewPostNotificationView(), ShowAnimation.HorizontalMove, false));
+                        }
+                    }
+                    #endregion
+
+                    #region 自定义
+                    // 是否已经抓取过
+                    bool? customExist = false;
+
+                    if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.CustomParts.ToList().Exists(s => post.PostPart == s))
+                    {
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.All(p => p.Url != post.Url))
+                            {
+                                if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Count <= i)
+                                {
+                                    (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Add(post);
+                                }
+                                else
+                                {
+                                    (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Insert(i, post);
+                                }
+
+                                // 最大缓存
+                                if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Count >= 30)
+                                {
+                                    (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.RemoveAt(29);
+                                }
+
+                                customExist = null;
+                            }
+                            else
+                            {
+                                customExist = true;
+                            }
+
+                        });
+                    }
+
+                    if (!initialization && customExist == null)
+                    {
+                        if (App.Config.Config.PlaySoundCustom)
+                        {
+                            canPlaySound = true;
+                        }
+
+                        if (App.Config.Config.AutoOpen)
+                        {
+                            Web.OpenWithBrowser(post.Url);
+                        }
+
+                        if (App.Config.Config.NotifyCuston)
+                        {
+                            App.Current.Dispatcher.Invoke(() => Notification.Show(new NewPostNotificationView(), ShowAnimation.HorizontalMove, false));
+                        }
+                    }
+                    #endregion
+
+                    if (customExist == true && qaExist == true)
                     {
                         break; // 已经循环到存在的帖子即可停止循环以提高性能
                     }
-                    else if (App.Config.Config.SuperMode && !initialization)
-                    {
-                        canPlaySound = true;
-                        Web.OpenWithBrowser(post.Url);
-                    }
                 }
 
-                if (canPlaySound && App.Config.Config.PlaySound)
+                if (canPlaySound)
                 {
                     using (SoundPlayer soundPlayer = new SoundPlayer(Properties.Resources.levelup))
                     {
