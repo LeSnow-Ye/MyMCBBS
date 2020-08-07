@@ -1,17 +1,13 @@
-﻿
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using GalaSoft.MvvmLight;
-using System.Threading.Tasks;
+﻿using GalaSoft.MvvmLight;
 using System.Windows.Media.Imaging;
 
 namespace MyMCBBS.Model
 {
     public class DialogHostModel : ObservableObject
     {
+        private bool isNewUserDialogOpen = false;
         private bool isNoticeDialogOpen = false;
+        private bool isAboutDialogOpen = false;
         private BitmapImage noticeContent = new BitmapImage();
 
         public bool IsNoticeDialogOpen
@@ -24,9 +20,6 @@ namespace MyMCBBS.Model
             }
         }
 
-
-        private bool isNewUserDialogOpen = false;
-
         public bool IsNewUserDialogOpen
         {
             get => this.isNewUserDialogOpen;
@@ -34,6 +27,16 @@ namespace MyMCBBS.Model
             {
                 this.isNewUserDialogOpen = value;
                 this.RaisePropertyChanged("isNewUserDialogOpen");
+            }
+        }
+
+        public bool IsAboutDialogOpen
+        {
+            get => this.isAboutDialogOpen;
+            set
+            {
+                this.isAboutDialogOpen = value;
+                this.RaisePropertyChanged("IsAboutDialogOpen");
             }
         }
 

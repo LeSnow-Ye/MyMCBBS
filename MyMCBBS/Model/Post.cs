@@ -1,21 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using GalaSoft.MvvmLight;
 using System.Threading;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
 
 namespace MyMCBBS.Model
 {
-   public class Post : ObservableObject
+    public class Post : ObservableObject
     {
         private string poster;
         private string url;
         private string title;
-
         private string part;
-
         private bool isNewPost = true;
 
         public Post()

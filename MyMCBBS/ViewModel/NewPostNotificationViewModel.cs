@@ -8,7 +8,7 @@ namespace MyMCBBS.ViewModel
     {
         public NewPostNotificationViewModel()
         {
-             this.Visit = new RelayCommand(() => Web.OpenWithBrowser(this.URL));
+            this.Visit = new RelayCommand(() => Web.OpenWithBrowser(this.URL));
         }
 
         private string part = "Part";

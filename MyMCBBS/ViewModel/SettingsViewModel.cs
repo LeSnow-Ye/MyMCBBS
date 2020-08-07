@@ -3,18 +3,12 @@
     using GalaSoft.MvvmLight;
     using MyMCBBS.Model;
     using System;
-    using System.Collections.Generic;
-    using System.Linq;
-    using System.Text;
-    using System.Threading.Tasks;
-    using System.Xml.Serialization;
-    using MyMCBBS.Utils;
-    using System.IO;
     using System.Diagnostics;
+    using System.IO;
+    using System.Xml.Serialization;
 
     public class SettingsViewModel : ViewModelBase
     {
-
         private Config config;
 
         public SettingsViewModel()

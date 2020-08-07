@@ -4,9 +4,7 @@
     using MyMCBBS.Utils;
     using System;
     using System.Diagnostics;
-    using System.IO;
     using System.Threading.Tasks;
-    using System.Windows;
     using System.Windows.Media.Imaging;
 
     /// <summary>
@@ -46,7 +44,7 @@
                 this.GoldNugget = result.GoldNugget;
                 this.Avatar = new BitmapImage(new Uri(result.AvatarUrl));
             }
-            catch(Exception e) { Debug.WriteLine(e.ToString()); }
+            catch (Exception e) { Debug.WriteLine(e.ToString()); }
         }
 
         public UserModel()

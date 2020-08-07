@@ -1,12 +1,11 @@
 ﻿namespace MyMCBBS.View
 {
-    using System.Windows;
-    using MyMCBBS.ViewModel;
-    using System.Windows.Controls;
     using GalaSoft.MvvmLight.Messaging;
-    using System.Windows.Media.Animation;
+    using MyMCBBS.ViewModel;
     using System;
     using System.Diagnostics;
+    using System.Windows;
+    using System.Windows.Media.Animation;
 
     /// <summary>
     /// LaunchWindow.xaml 的交互逻辑.

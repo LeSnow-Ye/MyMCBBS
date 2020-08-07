@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyMCBBS.Utils;
-using GalaSoft.MvvmLight;
-using System.Collections.ObjectModel;
-using MyMCBBS.ViewModel;
+﻿using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
+using MyMCBBS.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
+using MyMCBBS.Utils;
+using System.Collections.ObjectModel;
+using System.Linq;
+using System.Collections.Generic;
 
 namespace MyMCBBS.Model
 {
@@ -32,6 +30,36 @@ namespace MyMCBBS.Model
 
         public CustomSpiderModel()
         {
+            Messenger.Default.Register<PostMessage>(this, "Custom", (m) =>
+            {
+                App.Current.Dispatcher.Invoke(() =>
+                {
+                    if (this.Posts.All(p => p.Url != m.Post.Url))
+                    {
+                        if (this.Posts.Count <= m.Index)
+                        {
+                            this.Posts.Add(m.Post);
+                        }
+                        else
+                        {
+                            this.Posts.Insert(m.Index, m.Post);
+                        }
+
+                        // 最大缓存
+                        if (this.Posts.Count >= 30)
+                        {
+                            this.Posts.RemoveAt(29);
+                        }
+
+                        Messenger.Default.Send<bool?>(null, "CustomBack");
+                    }
+                    else
+                    {
+                        Messenger.Default.Send<bool?>(true, "CustomBack");
+                    }
+                });
+            });
+
             this.Posts.CollectionChanged += (s, e) =>
             {
                 (App.Current.FindResource("Locator") as ViewModelLocator).NewPostNotification.Part = Posts[0].PostPart;

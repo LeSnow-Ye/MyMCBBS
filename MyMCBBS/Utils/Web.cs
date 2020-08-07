@@ -51,18 +51,7 @@
         /// <param name="url">要打开的网页链接.</param>
         internal static void OpenWithBrowser(string url)
         {
-            Process process = new Process();
-            ProcessStartInfo startInfo = new ProcessStartInfo
-            {
-                FileName = "cmd.exe",
-                Arguments = $"/c start {url.Replace("&", "\"&\"")}",
-                UseShellExecute = false,
-                RedirectStandardInput = false,
-                RedirectStandardOutput = true,
-                CreateNoWindow = true,
-            };
-            process.StartInfo = startInfo;
-            process.Start();
+            Process.Start(new ProcessStartInfo(url));
         }
 
         /// <summary>

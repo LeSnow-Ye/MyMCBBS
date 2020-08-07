@@ -1,23 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using MyMCBBS.Model;
-using AngleSharp;
-using System.Media;
+﻿using AngleSharp;
 using AngleSharp.Dom;
-using System.Timers;
-using MyMCBBS.ViewModel;
+using GalaSoft.MvvmLight.Messaging;
 using HandyControl.Controls;
 using HandyControl.Data;
+using MyMCBBS.Model;
 using MyMCBBS.View;
-using System.Data;
-using System.Windows.Markup;
+using MyMCBBS.ViewModel;
 using System.Diagnostics;
+using System.Linq;
+using System.Media;
+using System.Threading.Tasks;
+using System.Timers;
 
 namespace MyMCBBS.Utils
 {
+    public struct PostMessage
+    {
+        public Post Post;
+        public int Index;
+    }
+
     public class PostsSpider
     {
         private Timer Timer = new Timer(3000);
@@ -59,6 +61,7 @@ namespace MyMCBBS.Utils
                     };
 
                     #region 爱心收割机
+
                     // 是否已经抓取过
                     bool? qaExist = false;
 
@@ -69,32 +72,9 @@ namespace MyMCBBS.Utils
                         case "周边问答":
                         case "联机问答":
                         case "基岩版问答":
-                            App.Current.Dispatcher.Invoke(() =>
-                            {
-                                if ((App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.All(p => p.Url != post.Url))
-                                {
-                                    if ((App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.Count <= i)
-                                    {
-                                        (App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.Add(post);
-                                    }
-                                    else
-                                    {
-                                        (App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.Insert(i, post);
-                                    }
-
-                                    // 最大缓存
-                                    if ((App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.Count >= 30)
-                                    {
-                                        (App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts.RemoveAt(29);
-                                    }
-
-                                    qaExist = null;
-                                }
-                                else
-                                {
-                                    qaExist = true;
-                                }
-                            });
+                            // 用Messenger降耦合
+                            Messenger.Default.Send<PostMessage>(new PostMessage() { Post = post, Index = i }, "Hearts");
+                            Messenger.Default.Register<bool>(this, "HeartsBack", (b) => qaExist = b);
                             break;
                     }
 
@@ -115,41 +95,18 @@ namespace MyMCBBS.Utils
                             App.Current.Dispatcher.Invoke(() => Notification.Show(new NewPostNotificationView(), ShowAnimation.HorizontalMove, false));
                         }
                     }
-                    #endregion
+
+                    #endregion 爱心收割机
 
                     #region 自定义
+
                     // 是否已经抓取过
                     bool? customExist = false;
 
-                    if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.CustomParts.ToList().Exists(s => post.PostPart == s))
+                    if (App.Config.Config.CustonPartList.Exists(s => post.PostPart == s))
                     {
-                        App.Current.Dispatcher.Invoke(() =>
-                        {
-                            if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.All(p => p.Url != post.Url))
-                            {
-                                if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Count <= i)
-                                {
-                                    (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Add(post);
-                                }
-                                else
-                                {
-                                    (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Insert(i, post);
-                                }
-
-                                // 最大缓存
-                                if ((App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.Count >= 30)
-                                {
-                                    (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider.CustomSpiderModel.Posts.RemoveAt(29);
-                                }
-
-                                customExist = null;
-                            }
-                            else
-                            {
-                                customExist = true;
-                            }
-
-                        });
+                        Messenger.Default.Send<PostMessage>(new PostMessage() { Post = post, Index = i }, "Custom");
+                        Messenger.Default.Register<bool>(this, "CustomBack", (b) => customExist = b);
                     }
 
                     if (!initialization && customExist == null)
@@ -169,7 +126,8 @@ namespace MyMCBBS.Utils
                             App.Current.Dispatcher.Invoke(() => Notification.Show(new NewPostNotificationView(), ShowAnimation.HorizontalMove, false));
                         }
                     }
-                    #endregion
+
+                    #endregion 自定义
 
                     if (customExist == true && qaExist == true)
                     {

@@ -1,5 +1,4 @@
-﻿
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 using MyMCBBS.Model;
 
 namespace MyMCBBS.ViewModel

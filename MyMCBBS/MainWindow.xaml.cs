@@ -1,24 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media.Animation;
-using System.Windows.Data;
-using System.Windows.Documents;
-using HandyControl.Tools;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using HandyControl.Controls;
-using GalaSoft.MvvmLight;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+﻿using HandyControl.Controls;
+using HandyControl.Data;
 using HandyControl.Tools.Extension;
 using MyMCBBS.View;
-using HandyControl.Data;
+using System;
+using System.Windows;
+using System.Windows.Input;
+using System.Windows.Media.Animation;
 
 namespace MyMCBBS
 {
@@ -56,6 +43,7 @@ namespace MyMCBBS
         }
 
         private void NotifyIcon_Click(object sender, RoutedEventArgs e) => this.Show();
+
         private void HideWindow_Click(object sender, RoutedEventArgs e) => this.Hide();
 
         private void Button_Click(object sender, RoutedEventArgs e)

@@ -106,7 +106,7 @@
                     Margin="0,0,0,-16"
                     DockPanel.Dock="Top">
                     <hc:GifImage.Source>
-                        <BitmapImage UriSource="/MyMCBBS;component/Resources/Launching.gif"/>
+                        <BitmapImage UriSource="/MyMCBBS;component/Resources/Launching.gif" />
                     </hc:GifImage.Source>
                 </hc:GifImage>
                 <Label

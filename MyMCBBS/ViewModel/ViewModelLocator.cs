@@ -1,7 +1,5 @@
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Ioc;
 using CommonServiceLocator;
-using MyMCBBS.ViewModel;
+using GalaSoft.MvvmLight.Ioc;
 
 namespace MyMCBBS.ViewModel
 {
@@ -32,7 +30,6 @@ namespace MyMCBBS.ViewModel
         public HeartsHarvesterViewModel HeartsHarvester { get => ServiceLocator.Current.GetInstance<HeartsHarvesterViewModel>(); }
         public NewPostNotificationViewModel NewPostNotification { get => ServiceLocator.Current.GetInstance<NewPostNotificationViewModel>(); }
         public CustomSpiderViewModel CustomSpider { get => ServiceLocator.Current.GetInstance<CustomSpiderViewModel>(); }
-
 
         public static void Cleanup()
         {

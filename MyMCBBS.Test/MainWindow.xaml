@@ -14,6 +14,6 @@
         <TextBlock
                     VerticalAlignment="Center"
                     Style="{StaticResource TextBlockSubTitleBold}"
-                    Text="  MyMCBBS  | "/>
+                    Text="  MyMCBBS  | " />
     </Grid>
 </Window>

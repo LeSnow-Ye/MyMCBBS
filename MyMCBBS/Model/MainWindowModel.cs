@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
+﻿using GalaSoft.MvvmLight;
 
 namespace MyMCBBS.Model
 {
     public class MainWindowModel : ObservableObject
     {
-        public  enum Index : byte
+        public enum Index : byte
         {
             /// <summary>
             /// 0 主页

@@ -1,10 +1,12 @@
-﻿using System;
+﻿using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using GalaSoft.MvvmLight.Messaging;
+using MyMCBBS.Model;
+using MyMCBBS.Utils;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Threading.Tasks;
-using GalaSoft.MvvmLight;
-using GalaSoft.MvvmLight.Command;
-using MyMCBBS.Model;
 
 namespace MyMCBBS.ViewModel
 {
@@ -14,8 +16,20 @@ namespace MyMCBBS.ViewModel
 
         public DialogHostViewModel()
         {
+            Messenger.Default.Register<bool>(this, "OpenAboutCommand", (i) =>
+            {
+                if (i)
+                {
+                    this.DialogHostModel.IsAboutDialogOpen = true;
+                }
+            });
+
             this.dialogHostModel = new DialogHostModel();
-            this.Close = new RelayCommand(() => this.DialogHostModel.IsNoticeDialogOpen = false);
+            this.Close = new RelayCommand(() =>
+            {
+                this.DialogHostModel.IsNoticeDialogOpen = false;
+                this.DialogHostModel.IsAboutDialogOpen = false;
+            });
             this.OkButtonCommand = new RelayCommand<double>((input) =>
             {
                 App.Config.Config.UID = (int)input;
@@ -27,7 +41,6 @@ namespace MyMCBBS.ViewModel
                     this.DialogHostModel.IsNewUserDialogOpen = false;
                 });
             });
-
 
             Task.Run(async () =>
             {
@@ -62,6 +75,8 @@ namespace MyMCBBS.ViewModel
         public RelayCommand Close { get; set; }
 
         public RelayCommand<double> OkButtonCommand { get; set; }
+
+        public RelayCommand<Uri> HyperlinkCommand { get; set; } = new RelayCommand<Uri>((uri) => Web.OpenWithBrowser(uri.ToString()));
 
         /// <summary>
         /// Gets or sets dialogHostModel.

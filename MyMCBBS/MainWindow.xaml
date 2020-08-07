@@ -177,7 +177,7 @@
                             Padding="8,4,16,4"
                             HorizontalAlignment="Left"
                             HorizontalContentAlignment="Left"
-                            Click="Button_Click"
+                            Command="{Binding AboutCommand}"
                             Style="{StaticResource MaterialDesignFlatButton}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon

@@ -5,10 +5,10 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:MyMCBBS.View"
-    d:DesignHeight="680"
-    d:DesignWidth="680"
     xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    d:DesignHeight="680"
+    d:DesignWidth="680"
     DataContext="{Binding Source={StaticResource Locator}, Path=Dialog}"
     mc:Ignorable="d">
     <Grid>
@@ -62,9 +62,9 @@
                             Style="{StaticResource NumericUpDownPlus}" />
                         <Button
                             Width="80"
-                            Content="确定"
                             Command="{Binding OkButtonCommand}"
-                            CommandParameter="{Binding ElementName=Number,Path=Value}"
+                            CommandParameter="{Binding ElementName=Number, Path=Value}"
+                            Content="确定"
                             Style="{StaticResource MaterialDesignOutlinedButton}" />
                     </StackPanel>
                 </StackPanel>
@@ -77,9 +77,100 @@
                     <Button
                         Width="120"
                         Margin="24,24,24,0"
+                        Command="{Binding Close}"
                         Content="Got It"
                         FontSize="14"
+                        Style="{StaticResource MaterialDesignOutlinedButton}" />
+                </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost IsOpen="{Binding DialogHostModel.IsAboutDialogOpen}">
+            <materialDesign:DialogHost.DialogContent>
+                <StackPanel Margin="24,32,24,36">
+                    <TextBlock
+                        Margin="0,0,0,8"
+                        HorizontalAlignment="Left"
+                        FontFamily="/MyMCBBS;component/Resources/#Minecraft"
+                        FontSize="36"
+                        FontWeight="Bold"
+                        Text="MyMCBBS V2" />
+                    <Border
+                        Width="260"
+                        Margin="0,0,0,16"
+                        HorizontalAlignment="Left"
+                        BorderBrush="{DynamicResource SecondaryAccentBrush}"
+                        BorderThickness="2"
+                        CornerRadius="1" />
+                    <TextBlock Margin="0,0,0,8" FontSize="16">
+                        <Run Text="作者：" />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://lesnow.tk/">
+                            LeSnow_Ye
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock
+                        Margin="0,0,0,8"
+                        FontSize="16"
+                        Text="版本:   beta v0.1" />
+                    <TextBlock Margin="0,0,0,8" FontSize="16">
+                        <Run Text="第三方库：" />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://anglesharp.github.io/">
+                            AngleSharp
+                        </Hyperlink>
+                        <Run Text=" " />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://github.com/HandyOrg/HandyControl">
+                            HandyControl
+                        </Hyperlink>
+                        <Run Text=" " />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://lvcharts.net/">
+                            LiveCharts
+                        </Hyperlink>
+                        <LineBreak />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="http://materialdesigninxaml.net/">
+                            MaterialDesign
+                        </Hyperlink>
+                        <Run Text=" " />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="http://www.mvvmlight.net/">
+                            MvvmLight
+                        </Hyperlink>
+                        <Run Text=" " />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://github.com/XamlAnimatedGif/WpfAnimatedGif">
+                            WpfAnimatedGif
+                        </Hyperlink>
+                    </TextBlock>
+                    <TextBlock Margin="0,0,0,8" FontSize="16">
+                        <Run Text="原帖地址：" />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://www.mcbbs.net/home.php?mod=space&amp;uid=1249946">
+                            MCBBS
+                        </Hyperlink>
+                    </TextBlock>
+                    <Button
+                        Width="80"
                         Command="{Binding Close}"
+                        Content="确定"
                         Style="{StaticResource MaterialDesignOutlinedButton}" />
                 </StackPanel>
             </materialDesign:DialogHost.DialogContent>
