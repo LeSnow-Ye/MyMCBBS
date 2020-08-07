@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows;
 using MyMCBBS.Model;
+using MyMCBBS.Utils;
 using MyMCBBS.ViewModel;
 
 namespace MyMCBBS
@@ -18,5 +19,7 @@ namespace MyMCBBS
         public static int Version = 2000;
         public static SettingsViewModel Config = new SettingsViewModel();
         public static UserModel UserModel;
+
+        public static PostsSpider PostsSpider = new PostsSpider();
     }
 }

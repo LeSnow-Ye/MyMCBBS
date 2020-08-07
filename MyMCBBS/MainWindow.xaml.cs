@@ -8,12 +8,15 @@ using System.Windows.Controls;
 using System.Windows.Media.Animation;
 using System.Windows.Data;
 using System.Windows.Documents;
+using HandyControl.Tools;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using HandyControl.Controls;
+using GalaSoft.MvvmLight;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using HandyControl.Tools.Extension;
 
 namespace MyMCBBS
 {
@@ -33,11 +36,7 @@ namespace MyMCBBS
             Storyboard.SetTarget(stb, this);
             stb.Completed += (s, o) => Environment.Exit(0);
             stb.Begin();
-        }
-
-        private void Minimize_Click(object sender, RoutedEventArgs e)
-        {
-            this.WindowState = WindowState.Minimized;
+            this.NotifyIcon.Hide();
         }
 
         private void Window_Drag(object sender, MouseEventArgs e)
@@ -54,9 +53,7 @@ namespace MyMCBBS
             }
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            Dialog.Show(new View.DialogView());
-        }
+        private void NotifyIcon_Click(object sender, RoutedEventArgs e) => this.Show();
+        private void HideWindow_Click(object sender, RoutedEventArgs e) => this.Hide();
     }
 }

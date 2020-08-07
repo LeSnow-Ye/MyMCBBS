@@ -1,34 +1,74 @@
 using GalaSoft.MvvmLight;
+using GalaSoft.MvvmLight.Command;
+using MyMCBBS.Model;
+using HandyControl.Controls;
+using System;
+using HandyControl.Data;
+using System.Diagnostics;
 
 namespace MyMCBBS.ViewModel
 {
-    /// <summary>
-    /// This class contains properties that the main View can data bind to.
-    /// <para>
-    /// Use the <strong>mvvminpc</strong> snippet to add bindable properties to this ViewModel.
-    /// </para>
-    /// <para>
-    /// You can also use Blend to data bind with the tool's support.
-    /// </para>
-    /// <para>
-    /// See http://www.galasoft.ch/mvvm
-    /// </para>
-    /// </summary>
     public class MainViewModel : ViewModelBase
     {
+        public RelayCommand<FunctionEventArgs<object>> IndexSelectionChangedCommand => new Lazy<RelayCommand<FunctionEventArgs<object>>>(() =>
+            new RelayCommand<FunctionEventArgs<object>>(SwitchItem)).Value;
+
+
+        private MainWindowModel mainWindowModel;
+
+        /// <summary>
+        /// Gets or sets MainWindowModel.
+        /// </summary>
+        public MainWindowModel MainWindowModel
+        {
+            get => this.mainWindowModel;
+            set
+            {
+                this.mainWindowModel = value;
+                this.RaisePropertyChanged("mainWindowModel");
+            }
+        }
+
+        private void SwitchItem(FunctionEventArgs<object> info)
+        {
+            string input = (info.Info as SideMenuItem)?.Header.ToString();
+            this.MainWindowModel.Title = input;
+
+            switch (input)
+            {
+                case "主页":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.Home;
+                    break;
+                case "爱心收割机":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.HeartsHarvester;
+                    break;
+                case "主题抓取器":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.PostSpider;
+                    break;
+                case "收藏":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.Collections;
+                    break;
+                case "积分分析":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.CreditAnalist;
+                    break;
+                case "统计信息":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.Statistics;
+                    break;
+                case "小工具":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.Tools;
+                    break;
+                case "快捷导航":
+                    this.MainWindowModel.PresentIndex = MainWindowModel.Index.Sites;
+                    break;
+            }
+        }
+
         /// <summary>
         /// Initializes a new instance of the MainViewModel class.
         /// </summary>
         public MainViewModel()
         {
-            ////if (IsInDesignMode)
-            ////{
-            ////    // Code runs in Blend --> create design time data.
-            ////}
-            ////else
-            ////{
-            ////    // Code runs "for real"
-            ////}
+            this.mainWindowModel = new MainWindowModel();
         }
     }
 }

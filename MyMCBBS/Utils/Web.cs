@@ -19,12 +19,11 @@
         /// <returns>网页内容.</returns>
         internal static string DownloadWebsite(string url)
         {
-            using (WebClient webClient = new WebClient())
+            for (int i = 0; i < 5; i++)
             {
-                webClient.Encoding = Encoding.UTF8;
-
-                for (int i = 0; i < 5; i++)
+                using (WebClient webClient = new WebClient())
                 {
+                    webClient.Encoding = Encoding.UTF8;
                     try
                     {
                         string result;
@@ -42,9 +41,8 @@
                         Debug.WriteLine(e.ToString());
                     }
                 }
-
-                return "下载失败";
             }
+            return "下载失败";
         }
 
         /// <summary>

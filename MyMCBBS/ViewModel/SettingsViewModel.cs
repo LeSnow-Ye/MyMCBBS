@@ -54,6 +54,7 @@
             try
             {
                 xmlSerializer.Serialize(new StreamWriter("MyMCBBS.conf"), this.Config);
+                Debug.WriteLine("Saved");
             }
             catch (Exception e)
             {

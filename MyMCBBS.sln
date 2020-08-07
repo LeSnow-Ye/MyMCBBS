@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMCBBS", "MyMCBBS\MyMCBBS.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMCBBS.Test", "MyMCBBS.Test\MyMCBBS.Test.csproj", "{E8C919C9-DA4E-4E76-A5EF-69D78852D120}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MyMCBBS.Updater", "MyMCBBS.Updater\MyMCBBS.Updater.csproj", "{D2E41CD1-D9E6-4EFE-9A08-5CA30BBE014B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{E8C919C9-DA4E-4E76-A5EF-69D78852D120}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8C919C9-DA4E-4E76-A5EF-69D78852D120}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8C919C9-DA4E-4E76-A5EF-69D78852D120}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D2E41CD1-D9E6-4EFE-9A08-5CA30BBE014B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2E41CD1-D9E6-4EFE-9A08-5CA30BBE014B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2E41CD1-D9E6-4EFE-9A08-5CA30BBE014B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2E41CD1-D9E6-4EFE-9A08-5CA30BBE014B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
