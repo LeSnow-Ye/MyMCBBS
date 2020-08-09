@@ -8,6 +8,7 @@ namespace MyMCBBS.Model
         private bool isNewUserDialogOpen = false;
         private bool isNoticeDialogOpen = false;
         private bool isAboutDialogOpen = false;
+        private bool isSettingsDialogOpen = false;
         private BitmapImage noticeContent = new BitmapImage();
 
         public bool IsNoticeDialogOpen
@@ -37,6 +38,16 @@ namespace MyMCBBS.Model
             {
                 this.isAboutDialogOpen = value;
                 this.RaisePropertyChanged("IsAboutDialogOpen");
+            }
+        }
+
+        public bool IsSettingsDialogOpen
+        {
+            get => this.isSettingsDialogOpen;
+            set
+            {
+                this.isSettingsDialogOpen = value;
+                this.RaisePropertyChanged("IsSettingsDialogOpen");
             }
         }
 

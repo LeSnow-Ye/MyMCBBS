@@ -6,9 +6,9 @@
     xmlns:d1p1="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:hc="https://handyorg.github.io/handycontrol"
     xmlns:local="clr-namespace:MyMCBBS"
+    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
     d1p1:Ignorable="d"
-    StartupUri="View/LaunchingWindow.xaml"
-    xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes">
+    StartupUri="View/LaunchingWindow.xaml">
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,7 +18,15 @@
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Button.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.PopupBox.xaml" />
                 <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Defaults.xaml" />
-                <materialDesign:BundledTheme BaseTheme="Light" PrimaryColor="Blue" SecondaryColor="Lime" />
+                <materialDesign:BundledTheme
+                    BaseTheme="Light"
+                    PrimaryColor="Blue"
+                    SecondaryColor="Lime" />
+
+                <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Colors/material.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Size/m.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/Weight/normal.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/LiveCharts.Wpf;component/Themes/base.xaml" />
             </ResourceDictionary.MergedDictionaries>
             <vm:ViewModelLocator
                 xmlns:vm="clr-namespace:MyMCBBS.ViewModel"

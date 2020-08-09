@@ -1,6 +1,5 @@
 ﻿using AngleSharp;
 using AngleSharp.Dom;
-using GalaSoft.MvvmLight.Messaging;
 using HandyControl.Controls;
 using HandyControl.Data;
 using MyMCBBS.Model;
@@ -8,18 +7,15 @@ using MyMCBBS.View;
 using MyMCBBS.ViewModel;
 using System.Diagnostics;
 using System.Linq;
+using System;
+using System.Net;
+using System.Text;
 using System.Media;
 using System.Threading.Tasks;
 using System.Timers;
 
 namespace MyMCBBS.Utils
 {
-    public struct PostMessage
-    {
-        public Post Post;
-        public int Index;
-    }
-
     public class PostsSpider
     {
         private Timer Timer = new Timer(3000);
@@ -40,8 +36,21 @@ namespace MyMCBBS.Utils
             Debug.WriteLine("Refresh");
             Task.Run(async () =>
             {
-                // 最新主题失效因此抓取 抢沙发
-                string html = Web.DownloadWebsite($"https://www.mcbbs.net/forum.php?mod=guide&view=sofa");
+                string html = "下载失败";
+                using (WebClient webClient = new WebClient())
+                {
+                    webClient.Encoding = Encoding.UTF8;
+                    try
+                    {
+                        // 最新主题失效因此抓取 抢沙发
+                        html = webClient.DownloadString("https://www.mcbbs.net/forum.php?mod=guide&view=sofa");
+                    }
+                    catch (Exception e)
+                    {
+                        Debug.WriteLine(e.ToString());
+                    }
+                }
+
                 var pageDocument = await BrowsingContext.New(Configuration.Default).OpenAsync(req => req.Content(html));
 
                 var postsPart = pageDocument.QuerySelectorAll("#threadlist > div.bm_c > table > tbody").ToList(); // 所有帖子的集合
@@ -72,9 +81,33 @@ namespace MyMCBBS.Utils
                         case "周边问答":
                         case "联机问答":
                         case "基岩版问答":
-                            // 用Messenger降耦合
-                            Messenger.Default.Send<PostMessage>(new PostMessage() { Post = post, Index = i }, "Hearts");
-                            Messenger.Default.Register<bool>(this, "HeartsBack", (b) => qaExist = b);
+                            App.Current.Dispatcher.Invoke(() =>
+                            {
+                                var posts = (App.Current.FindResource("Locator") as ViewModelLocator).HeartsHarvester.HeartsHarvesterModel.QAPosts;
+                                if (posts.All(p => p.Url != post.Url))
+                                {
+                                    if (posts.Count <= i)
+                                    {
+                                        posts.Add(post);
+                                    }
+                                    else
+                                    {
+                                        posts.Insert(i, post);
+                                    }
+
+                                    // 最大缓存
+                                    if (posts.Count >= 30)
+                                    {
+                                        posts.RemoveAt(29);
+                                    }
+
+                                    qaExist = null;
+                                }
+                                else
+                                {
+                                    qaExist = true;
+                                }
+                            });
                             break;
                     }
 
@@ -103,10 +136,35 @@ namespace MyMCBBS.Utils
                     // 是否已经抓取过
                     bool? customExist = false;
 
-                    if (App.Config.Config.CustonPartList.Exists(s => post.PostPart == s))
+                    var customSpider = (App.Current.FindResource("Locator") as ViewModelLocator).CustomSpider;
+                    if (customSpider.CustomSpiderModel.CustomParts.ToList().Exists(s => post.PostPart == s))
                     {
-                        Messenger.Default.Send<PostMessage>(new PostMessage() { Post = post, Index = i }, "Custom");
-                        Messenger.Default.Register<bool>(this, "CustomBack", (b) => customExist = b);
+                        App.Current.Dispatcher.Invoke(() =>
+                        {
+                            if (customSpider.CustomSpiderModel.Posts.All(p => p.Url != post.Url))
+                            {
+                                if (customSpider.CustomSpiderModel.Posts.Count <= i)
+                                {
+                                    customSpider.CustomSpiderModel.Posts.Add(post);
+                                }
+                                else
+                                {
+                                    customSpider.CustomSpiderModel.Posts.Insert(i, post);
+                                }
+
+                                // 最大缓存
+                                if (customSpider.CustomSpiderModel.Posts.Count >= 30)
+                                {
+                                    customSpider.CustomSpiderModel.Posts.RemoveAt(29);
+                                }
+
+                                customExist = null;
+                            }
+                            else
+                            {
+                                customExist = true;
+                            }
+                        });
                     }
 
                     if (!initialization && customExist == null)
@@ -128,11 +186,6 @@ namespace MyMCBBS.Utils
                     }
 
                     #endregion 自定义
-
-                    if (customExist == true && qaExist == true)
-                    {
-                        break; // 已经循环到存在的帖子即可停止循环以提高性能
-                    }
                 }
 
                 if (canPlaySound)

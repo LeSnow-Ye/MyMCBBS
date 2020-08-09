@@ -33,6 +33,11 @@ namespace MyMCBBS.ViewModel
             Messenger.Default.Send<bool>(true, "OpenAboutCommand");
         });
 
+        public RelayCommand SettingsCommand { get; set; } = new RelayCommand(() =>
+        {
+            Messenger.Default.Send<bool>(true, "OpenSettingsCommand");
+        });
+
         private void SwitchItem(FunctionEventArgs<object> info)
         {
             string input = (info.Info as SideMenuItem)?.Header.ToString();

@@ -167,12 +167,26 @@
                             MCBBS
                         </Hyperlink>
                     </TextBlock>
+                    <TextBlock Margin="0,0,0,8" FontSize="16">
+                        <Run Text="支持一下：" />
+                        <Hyperlink
+                            Command="{Binding HyperlinkCommand}"
+                            CommandParameter="{Binding NavigateUri, RelativeSource={RelativeSource Self}}"
+                            NavigateUri="https://cdn.jsdelivr.net/gh/LeSnow-Ye/CDN/img/Amazing.jpg">
+                            Amazing
+                        </Hyperlink>
+                    </TextBlock>
                     <Button
                         Width="80"
                         Command="{Binding Close}"
                         Content="确定"
                         Style="{StaticResource MaterialDesignOutlinedButton}" />
                 </StackPanel>
+            </materialDesign:DialogHost.DialogContent>
+        </materialDesign:DialogHost>
+        <materialDesign:DialogHost IsOpen="{Binding DialogHostModel.IsSettingsDialogOpen}">
+            <materialDesign:DialogHost.DialogContent>
+                <local:SettingsView/>
             </materialDesign:DialogHost.DialogContent>
         </materialDesign:DialogHost>
     </Grid>

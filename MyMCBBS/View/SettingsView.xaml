@@ -1,0 +1,55 @@
+﻿<UserControl
+    x:Class="MyMCBBS.View.SettingsView"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:hc="https://handyorg.github.io/handycontrol"
+    xmlns:local="clr-namespace:MyMCBBS.View"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    Width="460"
+    d:DesignHeight="450"
+    mc:Ignorable="d">
+    <StackPanel Margin="24,32,24,36">
+        <TextBlock
+            Margin="0,0,0,8"
+            HorizontalAlignment="Left"
+            FontSize="32"
+            FontWeight="Bold"
+            Text="设置" />
+        <Border
+            Width="260"
+            HorizontalAlignment="Left"
+            BorderBrush="{DynamicResource SecondaryAccentBrush}"
+            BorderThickness="2"
+            CornerRadius="1" />
+        <ToggleButton
+            Width="120"
+            Margin="0,16,16,16"
+            HorizontalAlignment="Left"
+            Content="开机自启"
+            FlowDirection="RightToLeft"
+            FontSize="16"
+            Foreground="{DynamicResource PrimaryTextBrush}"
+            IsChecked="{Binding Config.RunAtStartUp}"
+            Style="{StaticResource ToggleButtonSwitch}" />
+        <hc:NumericUpDown
+            Name="Number"
+            Width="150"
+            HorizontalAlignment="Left"
+            hc:InfoElement.Placeholder="Please Enter Content"
+            hc:InfoElement.Title="UID"
+            hc:InfoElement.TitleAlignment="Left"
+            hc:InfoElement.TitleWidth="30"
+            DecimalPlaces="0"
+            Style="{StaticResource NumericUpDownPlus}"
+            Value="{Binding Config.UID, Mode=OneWay}" />
+        <Button
+            Width="80"
+            Margin="16"
+            HorizontalAlignment="Right"
+            Command="{Binding OkButtonCommand}"
+            CommandParameter="{Binding ElementName=Number, Path=Value}"
+            Content="确定"
+            Style="{StaticResource MaterialDesignOutlinedButton}" />
+    </StackPanel>
+</UserControl>

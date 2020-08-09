@@ -30,36 +30,6 @@ namespace MyMCBBS.Model
 
         public CustomSpiderModel()
         {
-            Messenger.Default.Register<PostMessage>(this, "Custom", (m) =>
-            {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    if (this.Posts.All(p => p.Url != m.Post.Url))
-                    {
-                        if (this.Posts.Count <= m.Index)
-                        {
-                            this.Posts.Add(m.Post);
-                        }
-                        else
-                        {
-                            this.Posts.Insert(m.Index, m.Post);
-                        }
-
-                        // 最大缓存
-                        if (this.Posts.Count >= 30)
-                        {
-                            this.Posts.RemoveAt(29);
-                        }
-
-                        Messenger.Default.Send<bool?>(null, "CustomBack");
-                    }
-                    else
-                    {
-                        Messenger.Default.Send<bool?>(true, "CustomBack");
-                    }
-                });
-            });
-
             this.Posts.CollectionChanged += (s, e) =>
             {
                 (App.Current.FindResource("Locator") as ViewModelLocator).NewPostNotification.Part = Posts[0].PostPart;
@@ -116,7 +86,8 @@ namespace MyMCBBS.Model
             "基岩版软件资源",
             "基岩版服务器",
             "基岩版插件&服务端",
-            "公告和反馈",
+            "反馈和投诉",
+            "综合申请",
         };
 
         /// <summary>

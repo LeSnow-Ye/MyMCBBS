@@ -2,14 +2,18 @@
 {
     using GalaSoft.MvvmLight;
     using MyMCBBS.Utils;
-    using System;
+    using System.Xml.Serialization;
     using System.Diagnostics;
+    using System;
+    using System.IO;
     using System.Threading.Tasks;
     using System.Windows.Media.Imaging;
+    using System.IO.Compression;
 
     /// <summary>
     /// 用户类.
     /// </summary>
+    [Serializable]
     public class UserModel : ObservableObject
     {
         private string name;
@@ -43,13 +47,39 @@
                 this.NetherStar = result.NetherStar;
                 this.GoldNugget = result.GoldNugget;
                 this.Avatar = new BitmapImage(new Uri(result.AvatarUrl));
+
+                try
+                {
+                    XmlSerializer xmlSerializer = new XmlSerializer(typeof(UserDataModel));
+                    UserDataModel data = new UserDataModel();
+                    if (File.Exists("MyMCBBS.data"))
+                    {
+                        using (var streamReader = new StreamReader("MyMCBBS.data"))
+                        {
+                            data = xmlSerializer.Deserialize(streamReader) as UserDataModel;
+                        }
+                    }
+
+                    if (!data.Datas.Exists((o) => o.DateTime == DateTime.Now.Date))
+                    {
+                        data.Datas.Add(new DataOfOneDay() { DateTime = DateTime.Now.Date, UserData = this });
+                    }
+                    else
+                    {
+                        data.Datas[data.Datas.Count - 1] = new DataOfOneDay() { DateTime = DateTime.Now.Date, UserData = this };
+                    }
+
+                    using (var streamWriter = new StreamWriter("MyMCBBS.data"))
+                    {
+                        xmlSerializer.Serialize(streamWriter, data);
+                    }
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.ToString());
+                }
             }
             catch (Exception e) { Debug.WriteLine(e.ToString()); }
-        }
-
-        public UserModel()
-        {
-            this.RefreshAsync();
         }
 
         /// <summary>
@@ -81,6 +111,7 @@
         /// <summary>
         /// Gets or sets 介绍.
         /// </summary>
+        [XmlIgnore]
         public BitmapImage Avatar
         {
             get => this.avatar;

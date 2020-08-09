@@ -16,36 +16,6 @@ namespace MyMCBBS.Model
 
         public HeartsHarvesterModel()
         {
-            Messenger.Default.Register<PostMessage>(this, "Hearts", (m) =>
-            {
-                App.Current.Dispatcher.Invoke(() =>
-                {
-                    if (this.QAPosts.All(p => p.Url != m.Post.Url))
-                    {
-                        if (this.QAPosts.Count <= m.Index)
-                        {
-                            this.QAPosts.Add(m.Post);
-                        }
-                        else
-                        {
-                            this.QAPosts.Insert(m.Index, m.Post);
-                        }
-
-                        // 最大缓存
-                        if (this.QAPosts.Count >= 30)
-                        {
-                            this.QAPosts.RemoveAt(29);
-                        }
-
-                        Messenger.Default.Send<bool?>(null, "HeartsBack");
-                    }
-                    else
-                    {
-                        Messenger.Default.Send<bool?>(true, "HeartsBack");
-                    }
-                });
-            });
-
             this.QAPosts.CollectionChanged += (s, e) =>
             {
                 (App.Current.FindResource("Locator") as ViewModelLocator).NewPostNotification.Part = QAPosts[0].PostPart;

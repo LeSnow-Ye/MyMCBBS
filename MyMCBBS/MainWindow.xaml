@@ -9,7 +9,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:utils="clr-namespace:MyMCBBS.Utils"
     xmlns:view="clr-namespace:MyMCBBS.View"
-    Title="MainWindow"
+    Title="MyMCBBS"
     Width="1302"
     Height="742"
     AllowsTransparency="True"
@@ -158,6 +158,7 @@
                             Padding="8,4,16,4"
                             HorizontalAlignment="Left"
                             HorizontalContentAlignment="Left"
+                            Command="{Binding SettingsCommand}"
                             Style="{StaticResource MaterialDesignFlatButton}">
                             <StackPanel Orientation="Horizontal">
                                 <materialDesign:PackIcon
@@ -216,8 +217,9 @@
                     <materialDesign:TransitionerSlide>
                         <Label Content="3" />
                     </materialDesign:TransitionerSlide>
+                    <!--积分分析-->
                     <materialDesign:TransitionerSlide>
-                        <Label Content="4" />
+                        <!--view:CreditAnalystView HorizontalAlignment="Left"/-->
                     </materialDesign:TransitionerSlide>
                     <materialDesign:TransitionerSlide>
                         <Label Content="5" />
@@ -294,7 +296,7 @@
                     x:Name="Minimize"
                     Click="HideWindow_Click"
                     Style="{StaticResource ButtonStyle}"
-                    ToolTip="最小化">
+                    ToolTip="最小化到托盘图标">
                     <materialDesign:PackIcon
                         Width="24"
                         Height="20"

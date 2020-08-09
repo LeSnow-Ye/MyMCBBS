@@ -24,6 +24,18 @@ namespace MyMCBBS.ViewModel
                 }
             });
 
+            Messenger.Default.Register<bool>(this, "OpenSettingsCommand", (i) =>
+            {
+                if (i)
+                {
+                    this.DialogHostModel.IsSettingsDialogOpen = true;
+                }
+                else
+                {
+                    this.DialogHostModel.IsSettingsDialogOpen = false;
+                }
+            });
+
             this.dialogHostModel = new DialogHostModel();
             this.Close = new RelayCommand(() =>
             {

@@ -4,6 +4,8 @@
     using AngleSharp.Dom;
     using System;
     using System.Linq;
+    using System.Net;
+    using System.Text;
     using System.Text.RegularExpressions;
     using System.Threading.Tasks;
     using static System.Convert;
@@ -23,7 +25,7 @@
             try
             {
                 // 以防 API 失效，采用下载/分析网页方式
-                string html = Web.DownloadWebsite($"https://www.mcbbs.net/home.php?mod=space&uid={uid}");
+                string html = new WebClient() {Encoding=Encoding.UTF8 }.DownloadString($"https://www.mcbbs.net/home.php?mod=space&uid={uid}");
                 var pageDocument = await BrowsingContext.New(Configuration.Default).OpenAsync(req => req.Content(html));
 
                 var creditPart = pageDocument.QuerySelectorAll("#psts > ul > li").ToList();

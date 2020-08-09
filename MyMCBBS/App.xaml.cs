@@ -10,7 +10,7 @@ namespace MyMCBBS
     /// </summary>
     public partial class App : Application
     {
-        public static int Version = 2000;
+        public static int Version = 2010;
         public static SettingsViewModel Config = new SettingsViewModel();
         public static UserModel UserModel;
 
